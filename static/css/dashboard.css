@@ -1,0 +1,137 @@
+.stat-card {
+    position: relative;
+    overflow: hidden;
+    padding: 1.5rem;
+    height: 100%;
+}
+
+.stat-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
+    border-radius: 50%;
+    transform: translate(20px, -20px);
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.stat-value {
+    font-size: 1.875rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+}
+
+.stat-label {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Colors for stat card icons */
+.stat-icon.blue-bg {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: var(--primary-color);
+}
+.stat-icon.green-bg {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: var(--success-color);
+}
+.stat-icon.red-bg {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: var(--danger-color);
+}
+.stat-icon.purple-bg {
+    background-color: rgba(99, 102, 241, 0.1);
+    color: var(--accent-color);
+}
+
+/* Recent Activity Listing */
+.activity-list {
+    position: relative;
+    padding-left: 30px;
+}
+
+.activity-list::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 5px;
+    bottom: 5px;
+    width: 2px;
+    background-color: var(--border-color);
+}
+
+.activity-item {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.activity-item:last-child {
+    margin-bottom: 0;
+}
+
+.activity-marker {
+    position: absolute;
+    left: -22px;
+    top: 4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: 3px solid var(--primary-color);
+    z-index: 2;
+}
+
+.activity-item.updated .activity-marker {
+    border-color: var(--warning-color);
+}
+.activity-item.deleted .activity-marker {
+    border-color: var(--danger-color);
+}
+.activity-item.created .activity-marker {
+    border-color: var(--success-color);
+}
+
+.activity-time {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 0.15rem;
+}
+
+.activity-content {
+    font-size: 0.875rem;
+}
+
+.activity-content a {
+    font-weight: 600;
+    color: var(--text-main);
+    text-decoration: none;
+}
+
+.activity-content a:hover {
+    color: var(--primary-color);
+}
+
+/* Chart Canvas container */
+.chart-container {
+    position: relative;
+    margin: auto;
+    height: 250px;
+    width: 100%;
+}

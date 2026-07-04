@@ -1,0 +1,257 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ action }} Employee - EMS{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/forms.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block breadcrumbs %}
+<li class="breadcrumb-item"><a href="{% url 'employees:list' %}">Employees</a></li>
+<li class="breadcrumb-item active" aria-current="page">{% if employee %}{{ employee.employee_id }} / {% endif %}{{ action }}</li>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid fade-in">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">{% if employee %}Modify Profile{% else %}Add Employee{% endif %}</h2>
+            <p class="text-muted">Fill out the form below to register/edit employee profile details.</p>
+        </div>
+        <a href="{% if employee %}{% url 'employees:detail' employee.pk %}{% else %}{% url 'employees:list' %}{% endif %}" class="btn btn-light border">
+            <i class="fa-solid fa-xmark me-2"></i>Cancel
+        </a>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        
+        <div class="row g-4">
+            <!-- Image upload column -->
+            <div class="col-12 col-lg-3">
+                <div class="card card-custom p-4">
+                    <h6 class="fw-bold text-dark mb-3 text-center">Profile Photo</h6>
+                    
+                    <div class="d-flex flex-column align-items-center">
+                        <div class="image-preview-wrapper mb-3">
+                            {% if employee and employee.profile_image %}
+                            <img id="profileImagePreview" src="{{ employee.profile_image.url }}" alt="Profile Photo">
+                            {% else %}
+                            <img id="profileImagePreview" src="{% static 'images/default-avatar.png' %}" alt="Default Avatar">
+                            {% endif %}
+                        </div>
+                        
+                        <div class="w-100">
+                            {{ form.profile_image }}
+                            {% if form.profile_image.errors %}
+                            {% for error in form.profile_image.errors %}
+                            <div class="text-danger-custom text-center">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                        <small class="text-muted mt-2 text-center" style="font-size: 0.75rem;">Supported formats: PNG, JPG, JPEG. Max size 2MB.</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile form inputs column -->
+            <div class="col-12 col-lg-9">
+                <div class="card card-custom p-4">
+                    <h5 class="fw-bold text-dark mb-4">Employee Information</h5>
+                    
+                    <!-- Display Form-wide Validation Errors -->
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger mb-4 py-2">
+                        {% for error in form.non_field_errors %}
+                        <small class="d-block"><i class="fa-solid fa-triangle-exclamation me-2"></i>{{ error }}</small>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <div class="row g-3">
+                        <!-- Full Name -->
+                        <div class="col-12 col-md-6 form-group-spacing">
+                            <label for="id_full_name" class="form-label">Full Name <span class="text-danger">*</span></label>
+                            {{ form.full_name }}
+                            {% if form.full_name.errors %}
+                            {% for error in form.full_name.errors %}
+                            <div class="text-danger-custom">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <!-- Email -->
+                        <div class="col-12 col-md-6 form-group-spacing">
+                            <label for="id_email" class="form-label">Email Address <span class="text-danger">*</span></label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                            {% for error in form.email.errors %}
+                            <div class="text-danger-custom">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="col-12 col-md-6 form-group-spacing">
+                            <label for="id_phone" class="form-label">Phone Number <span class="text-danger">*</span></label>
+                            {{ form.phone }}
+                            {% if form.phone.errors %}
+                            {% for error in form.phone.errors %}
+                            <div class="text-danger-custom">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <!-- Gender -->
+                        <div class="col-12 col-md-6 form-group-spacing">
+                            <label for="id_gender" class="form-label">Gender <span class="text-danger">*</span></label>
+                            {{ form.gender }}
+                            {% if form.gender.errors %}
+                            {% for error in form.gender.errors %}
+                            <div class="text-danger-custom">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <!-- Department -->
+                        <div class="col-12 col-md-6 form-group-spacing">
+                            <label for="id_department" class="form-label">Department <span class="text-danger">*</span></label>
+                            {{ form.department }}
+                            {% if form.department.errors %}
+                            {% for error in form.department.errors %}
+                            <div class="text-danger-custom">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <!-- Designation -->
+                        <div class="col-12 col-md-6 form-group-spacing">
+                            <label for="id_designation" class="form-label">Designation <span class="text-danger">*</span></label>
+                            {{ form.designation }}
+                            {% if form.designation.errors %}
+                            {% for error in form.designation.errors %}
+                            <div class="text-danger-custom">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <!-- Salary -->
+                        <div class="col-12 col-md-6 form-group-spacing">
+                            <label for="id_salary" class="form-label">Salary (USD / Yr) <span class="text-danger">*</span></label>
+                            {{ form.salary }}
+                            {% if form.salary.errors %}
+                            {% for error in form.salary.errors %}
+                            <div class="text-danger-custom">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <!-- Status -->
+                        <div class="col-12 col-md-6 form-group-spacing">
+                            <label for="id_status" class="form-label">Status <span class="text-danger">*</span></label>
+                            {{ form.status }}
+                            {% if form.status.errors %}
+                            {% for error in form.status.errors %}
+                            <div class="text-danger-custom">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <!-- Date of Birth -->
+                        <div class="col-12 col-md-6 form-group-spacing">
+                            <label for="id_date_of_birth" class="form-label">Date of Birth <span class="text-danger">*</span></label>
+                            {{ form.date_of_birth }}
+                            {% if form.date_of_birth.errors %}
+                            {% for error in form.date_of_birth.errors %}
+                            <div class="text-danger-custom">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <!-- Date of Joining -->
+                        <div class="col-12 col-md-6 form-group-spacing">
+                            <label for="id_date_of_joining" class="form-label">Date of Joining <span class="text-danger">*</span></label>
+                            {{ form.date_of_joining }}
+                            {% if form.date_of_joining.errors %}
+                            {% for error in form.date_of_joining.errors %}
+                            <div class="text-danger-custom">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <!-- Address -->
+                        <div class="col-12 form-group-spacing">
+                            <label for="id_address" class="form-label">Street Address <span class="text-danger">*</span></label>
+                            {{ form.address }}
+                            {% if form.address.errors %}
+                            {% for error in form.address.errors %}
+                            <div class="text-danger-custom">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <!-- City -->
+                        <div class="col-6 col-md-3 form-group-spacing">
+                            <label for="id_city" class="form-label">City <span class="text-danger">*</span></label>
+                            {{ form.city }}
+                            {% if form.city.errors %}
+                            {% for error in form.city.errors %}
+                            <div class="text-danger-custom">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <!-- State -->
+                        <div class="col-6 col-md-3 form-group-spacing">
+                            <label for="id_state" class="form-label">State <span class="text-danger">*</span></label>
+                            {{ form.state }}
+                            {% if form.state.errors %}
+                            {% for error in form.state.errors %}
+                            <div class="text-danger-custom">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <!-- Country -->
+                        <div class="col-6 col-md-3 form-group-spacing">
+                            <label for="id_country" class="form-label">Country <span class="text-danger">*</span></label>
+                            {{ form.country }}
+                            {% if form.country.errors %}
+                            {% for error in form.country.errors %}
+                            <div class="text-danger-custom">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <!-- ZIP -->
+                        <div class="col-6 col-md-3 form-group-spacing">
+                            <label for="id_zip_code" class="form-label">ZIP Code <span class="text-danger">*</span></label>
+                            {{ form.zip_code }}
+                            {% if form.zip_code.errors %}
+                            {% for error in form.zip_code.errors %}
+                            <div class="text-danger-custom">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex justify-content-end gap-2">
+                        <button type="submit" class="btn btn-primary-custom px-4 py-2">
+                            <i class="fa-solid fa-floppy-disk me-2"></i>Save Profile
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/validation.js' %}"></script>
+{% endblock %}

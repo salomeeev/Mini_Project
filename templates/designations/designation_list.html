@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Designations - EMS{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/tables.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block breadcrumbs %}
+<li class="breadcrumb-item active" aria-current="page">Designations</li>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid fade-in">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Designations</h2>
+            <p class="text-muted">Manage company structural designations.</p>
+        </div>
+        <a href="{% url 'designations:add' %}" class="btn btn-primary-custom">
+            <i class="fa-solid fa-plus me-2"></i>Add Designation
+        </a>
+    </div>
+
+    <!-- Designations table -->
+    <div class="table-responsive-custom mb-3">
+        <table class="table table-custom align-middle">
+            <thead>
+                <tr>
+                    <th style="width: 25%;">Designation Title</th>
+                    <th style="width: 40%;">Description</th>
+                    <th style="width: 20%;">Total Employees</th>
+                    <th style="width: 15%;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for desig in designations %}
+                <tr>
+                    <td class="fw-bold text-dark">{{ desig.name }}</td>
+                    <td>{{ desig.description|default:"No description provided" }}</td>
+                    <td>
+                        <span class="badge bg-light text-dark border px-2 py-1">
+                            {{ desig.employees.all.count }} Employees
+                        </span>
+                    </td>
+                    <td>
+                        <div class="action-btn-group">
+                            <a href="{% url 'designations:edit' desig.pk %}" class="btn-action btn-edit" title="Edit Designation">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                            <a href="{% url 'designations:delete' desig.pk %}" class="btn-action btn-delete" title="Delete Designation">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center text-muted py-5">
+                        <i class="fa-solid fa-id-card mb-3" style="font-size: 3rem; color: #cbd5e1;"></i>
+                        <p class="m-0 fw-medium">No designations registered yet.</p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ employee.full_name }} - Profile{% endblock %}
+
+{% block breadcrumbs %}
+<li class="breadcrumb-item"><a href="{% url 'employees:list' %}">Employees</a></li>
+<li class="breadcrumb-item active" aria-current="page">{{ employee.employee_id }}</li>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid fade-in">
+    <!-- Action Header -->
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3 mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Employee Profile</h2>
+            <p class="text-muted">Viewing details for {{ employee.full_name }}.</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="{% url 'employees:edit' employee.pk %}" class="btn btn-warning text-dark border">
+                <i class="fa-solid fa-pen-to-square me-2"></i>Edit Profile
+            </a>
+            <a href="{% url 'employees:delete' employee.pk %}" class="btn btn-danger">
+                <i class="fa-solid fa-trash-can me-2"></i>Delete
+            </a>
+            <a href="{% url 'employees:list' %}" class="btn btn-light border">
+                <i class="fa-solid fa-arrow-left me-2"></i>Back to List
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Profile Sidebar Card -->
+        <div class="col-12 col-lg-4">
+            <div class="card card-custom text-center p-4">
+                <div class="d-flex justify-content-center mb-3">
+                    <div style="width: 140px; height: 140px; border-radius: 50%; overflow: hidden; border: 4px solid var(--border-color); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                        {% if employee.profile_image %}
+                        <img src="{{ employee.profile_image.url }}" alt="{{ employee.full_name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        {% else %}
+                        <img src="{% static 'images/default-avatar.png' %}" alt="Default Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <h4 class="fw-bold text-dark mb-1">{{ employee.full_name }}</h4>
+                <p class="text-muted mb-2">{{ employee.designation.name|default:"Unassigned designation" }}</p>
+                <div class="mb-3">
+                    {% if employee.status == 'Active' %}
+                    <span class="badge-custom badge-active">Active</span>
+                    {% else %}
+                    <span class="badge-custom badge-inactive">Inactive</span>
+                    {% endif %}
+                </div>
+                <hr class="my-3">
+                <div class="text-start">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted small fw-semibold">Employee ID:</span>
+                        <span class="fw-bold text-dark">{{ employee.employee_id }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted small fw-semibold">Joined On:</span>
+                        <span class="fw-medium text-dark">{{ employee.date_of_joining|date:"M d, Y" }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span class="text-muted small fw-semibold">Department:</span>
+                        <span class="fw-medium text-dark">{{ employee.department.name|default:"Unassigned" }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Information Tabs/Details Card -->
+        <div class="col-12 col-lg-8">
+            <div class="card card-custom p-4">
+                <!-- Nav Tabs -->
+                <ul class="nav nav-tabs border-bottom mb-4" id="profileTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active fw-semibold" id="personal-tab" data-bs-toggle="tab" data-bs-target="#personal" type="button" role="tab" aria-controls="personal" aria-selected="true">
+                            <i class="fa-solid fa-user me-2"></i>Personal Info
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link fw-semibold" id="professional-tab" data-bs-toggle="tab" data-bs-target="#professional" type="button" role="tab" aria-controls="professional" aria-selected="false">
+                            <i class="fa-solid fa-briefcase me-2"></i>Professional Info
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link fw-semibold" id="address-tab" data-bs-toggle="tab" data-bs-target="#address" type="button" role="tab" aria-controls="address" aria-selected="false">
+                            <i class="fa-solid fa-location-dot me-2"></i>Address & Contact
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Tab Panes -->
+                <div class="tab-content" id="profileTabsContent">
+                    <!-- Personal Info Tab -->
+                    <div class="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="personal-tab">
+                        <div class="row g-3">
+                            <div class="col-12 col-sm-6">
+                                <label class="text-muted small fw-semibold d-block mb-1">Full Name</label>
+                                <div class="bg-light p-2 rounded fw-medium">{{ employee.full_name }}</div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <label class="text-muted small fw-semibold d-block mb-1">Email Address</label>
+                                <div class="bg-light p-2 rounded fw-medium text-break">{{ employee.email }}</div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <label class="text-muted small fw-semibold d-block mb-1">Mobile Phone</label>
+                                <div class="bg-light p-2 rounded fw-medium">{{ employee.phone }}</div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <label class="text-muted small fw-semibold d-block mb-1">Gender</label>
+                                <div class="bg-light p-2 rounded fw-medium">{{ employee.gender }}</div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <label class="text-muted small fw-semibold d-block mb-1">Date of Birth</label>
+                                <div class="bg-light p-2 rounded fw-medium">{{ employee.date_of_birth|date:"M d, Y" }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Professional Info Tab -->
+                    <div class="tab-pane fade" id="professional" role="tabpanel" aria-labelledby="professional-tab">
+                        <div class="row g-3">
+                            <div class="col-12 col-sm-6">
+                                <label class="text-muted small fw-semibold d-block mb-1">Department</label>
+                                <div class="bg-light p-2 rounded fw-medium">{{ employee.department.name|default:"Unassigned" }}</div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <label class="text-muted small fw-semibold d-block mb-1">Designation</label>
+                                <div class="bg-light p-2 rounded fw-medium">{{ employee.designation.name|default:"Unassigned" }}</div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <label class="text-muted small fw-semibold d-block mb-1">Salary</label>
+                                <div class="bg-light p-2 rounded fw-bold text-primary">${{ employee.salary }} / yr</div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <label class="text-muted small fw-semibold d-block mb-1">Date of Joining</label>
+                                <div class="bg-light p-2 rounded fw-medium">{{ employee.date_of_joining|date:"M d, Y" }}</div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <label class="text-muted small fw-semibold d-block mb-1">Status</label>
+                                <div class="bg-light p-2 rounded fw-medium">{{ employee.status }}</div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <label class="text-muted small fw-semibold d-block mb-1">Created At</label>
+                                <div class="bg-light p-2 rounded fw-medium text-muted small">{{ employee.created_at|date:"M d, Y H:i" }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Address Tab -->
+                    <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label class="text-muted small fw-semibold d-block mb-1">Street Address</label>
+                                <div class="bg-light p-2 rounded fw-medium">{{ employee.address }}</div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <label class="text-muted small fw-semibold d-block mb-1">City</label>
+                                <div class="bg-light p-2 rounded fw-medium">{{ employee.city }}</div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <label class="text-muted small fw-semibold d-block mb-1">State / Province</label>
+                                <div class="bg-light p-2 rounded fw-medium">{{ employee.state }}</div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <label class="text-muted small fw-semibold d-block mb-1">Country</label>
+                                <div class="bg-light p-2 rounded fw-medium">{{ employee.country }}</div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <label class="text-muted small fw-semibold d-block mb-1">ZIP / Postal Code</label>
+                                <div class="bg-light p-2 rounded fw-medium">{{ employee.zip_code }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

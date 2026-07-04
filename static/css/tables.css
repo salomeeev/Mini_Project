@@ -1,0 +1,206 @@
+/* Employee and CRUD tables styling */
+.table-responsive-custom {
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background-color: #ffffff;
+    overflow: hidden;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+.table-custom {
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+
+.table-custom th {
+    background-color: #f8fafc;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.table-custom td {
+    padding: 1rem 1.25rem;
+    color: var(--text-main);
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.875rem;
+}
+
+.table-custom tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table-custom tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.table-custom tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+/* User avatars in table */
+.avatar-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.table-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border-color);
+}
+
+/* Sort headers links */
+.sort-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.sort-link:hover {
+    color: var(--primary-color);
+}
+
+.sort-link i {
+    font-size: 0.8rem;
+}
+
+.sort-link.active {
+    color: var(--primary-color);
+}
+
+/* Badges for Status, Gender etc */
+.badge-custom {
+    padding: 0.35em 0.65em;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 9999px;
+    display: inline-block;
+    text-align: center;
+}
+
+.badge-active {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: var(--success-color);
+}
+
+.badge-inactive {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: var(--danger-color);
+}
+
+/* Action button configurations */
+.action-btn-group {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-action {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    border: 1px solid var(--border-color);
+    background-color: #ffffff;
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+}
+
+.btn-action:hover {
+    background-color: var(--bg-light);
+    color: var(--text-main);
+}
+
+.btn-action.btn-view:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background-color: rgba(59, 130, 246, 0.05);
+}
+
+.btn-action.btn-edit:hover {
+    border-color: var(--warning-color);
+    color: var(--warning-color);
+    background-color: rgba(245, 158, 11, 0.05);
+}
+
+.btn-action.btn-delete:hover {
+    border-color: var(--danger-color);
+    color: var(--danger-color);
+    background-color: rgba(239, 68, 68, 0.05);
+}
+
+/* Filters toolbar section */
+.filters-toolbar {
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Search input with icon */
+.search-wrapper {
+    position: relative;
+}
+
+.search-wrapper i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+}
+
+.search-input-custom {
+    padding-left: 2.5rem !important;
+}
+
+/* Pagination container */
+.pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem;
+    border-top: 1px solid var(--border-color);
+    background-color: #ffffff;
+}
+
+.pagination-info {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+.pagination-custom .page-link {
+    border-radius: 8px;
+    margin: 0 2px;
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    transition: all 0.2s;
+}
+.pagination-custom .page-link:hover {
+    background-color: var(--bg-light);
+    border-color: var(--border-color);
+}
+.pagination-custom .page-item.active .page-link {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #ffffff;
+}
+.pagination-custom .page-item.disabled .page-link {
+    color: #cbd5e1;
+    background-color: #ffffff;
+    border-color: #f1f5f9;
+}
